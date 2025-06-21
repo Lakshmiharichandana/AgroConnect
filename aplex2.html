@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AgroConnect - Agriculture Assistant</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5fff0;
+      color: #333;
+      padding: 20px;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .grid-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    section {
+      background: #e9ffe0;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    label, input, textarea {
+      display: block;
+      width: 100%;
+      margin-top: 10px;
+    }
+    input, textarea {
+      padding: 8px;
+      margin-bottom: 15px;
+      border: 1px solid #aaa;
+      border-radius: 5px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #2f8f2f;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #256f25;
+    }
+    ul {
+      margin-top: 10px;
+      padding-left: 20px;
+    }
+    li {
+      margin-bottom: 8px;
+    }
+    a {
+      color: #007700;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    img {
+      border-radius: 5px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 768px) {
+      .grid-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>AgroConnect</h1>
+    <p>Your assistant for agriculture-related tasks and information</p>
+  </header>
+
+  <main class="grid-container">
+    <!-- Contact Form -->
+    <section>
+      <h2>Contact Us</h2>
+      <form id="contactForm">
+        <label>Name:</label>
+        <input type="text" name="name" />
+
+        <label>Email:</label>
+        <input type="email" name="email" />
+
+        <label>Message:</label>
+        <textarea name="message"></textarea>
+
+        <button type="submit">Send</button>
+      </form>
+    </section>
+
+    <!-- To-Do List & Government Schemes -->
+    <section>
+      <h2>Farm Task List</h2>
+      <input type="text" id="taskInput" placeholder="Add a new farm task..." />
+      <button type="button" onclick="addTask()">Add Task</button>
+      <ul id="taskList"></ul>
+
+      <hr style="margin: 20px 0;" />
+
+      <h2>Government Schemes</h2>
+      <button type="button" onclick="toggleSchemes()">Show/Hide Farmer Schemes</button>
+      <ul id="schemeList" style="display: none;"></ul>
+    </section>
+
+    <!-- Modern Farming Techniques -->
+    <section>
+      <h2>Modern Farming Techniques</h2>
+      <button type="button" onclick="toggleTechniques()">Show/Hide Techniques</button>
+      <ul id="techniqueList" style="display: none;">
+        <li><a href="https://en.wikipedia.org/wiki/Drip_irrigation" target="_blank">Drip Irrigation</a></li>
+        <li><a href="https://en.wikipedia.org/wiki/Hydroponics" target="_blank">Hydroponics</a></li>
+        <li><a href="https://en.wikipedia.org/wiki/Crop_rotation" target="_blank">Crop Rotation</a></li>
+        <li><a href="https://en.wikipedia.org/wiki/Vertical_farming" target="_blank">Vertical Farming</a></li>
+        <li><a href="https://en.wikipedia.org/wiki/Drone_agriculture" target="_blank">Drones in Agriculture</a></li>
+      </ul>
+    </section>
+
+    <!-- Toll-Free Helpline -->
+    <section>
+      <h2>Farmer Support Helpline</h2>
+      <p>Need help or guidance? Call the government’s toll-free number for farmers:</p>
+      <h3 style="color: green; margin-top: 10px;">📞 1800-180-1551</h3>
+      <p>(Available 24/7 in multiple Indian languages)</p>
+    </section>
+  </main>
+
+  <footer>
+    <p>© 2025 AgroConnect | Empowering Indian Farmers</p>
+  </footer>
+
+  <script>
+    // Contact Form Validation
+    document.getElementById('contactForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const name = this.name.value.trim();
+      const email = this.email.value.trim();
+      const message = this.message.value.trim();
+
+      if (!name || !email || !message) {
+        alert("All fields are required.");
+        return;
+      }
+
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!email.match(emailPattern)) {
+        alert("Enter a valid email address.");
+        return;
+      }
+
+      alert("Form submitted successfully!");
+      this.reset();
+    });
+
+    // Add Task
+    function addTask() {
+      const input = document.getElementById("taskInput");
+      const task = input.value.trim();
+      if (task === "") {
+        alert("Please enter a task.");
+        return;
+      }
+      const li = document.createElement("li");
+      li.textContent = task;
+      li.onclick = () => li.remove();
+      document.getElementById("taskList").appendChild(li);
+      input.value = "";
+    }
+
+    // Toggle Government Schemes
+    function toggleSchemes() {
+      const schemeList = document.getElementById("schemeList");
+      if (schemeList.style.display === "none") {
+        schemeList.innerHTML = `
+          <li><a href="https://pmkisan.gov.in/" target="_blank">PM-KISAN: ₹6000/year to eligible farmers</a></li>
+          <li><a href="https://pmfby.gov.in/" target="_blank">PMFBY: Crop Insurance Scheme</a></li>
+          <li><a href="https://soilhealth.dac.gov.in/" target="_blank">Soil Health Card Scheme</a></li>
+          <li><a href="https://pmkisan.gov.in/Documents/KCC_Guidelines.pdf" target="_blank">Kisan Credit Card (KCC)</a></li>
+          <li><a href="https://enam.gov.in/web/" target="_blank">eNAM: National Agriculture Market</a></li>
+        `;
+        schemeList.style.display = "block";
+      } else {
+        schemeList.style.display = "none";
+      }
+    }
+
+    // Toggle Techniques
+    function toggleTechniques() {
+      const techniqueList = document.getElementById("techniqueList");
+      techniqueList.style.display = techniqueList.style.display === "none" ? "block" : "none";
+    }
+  </script>
+</body>
+</html>
